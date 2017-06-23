@@ -18,19 +18,19 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordHold
 
     private LayoutInflater inflater;
     private RealmResults<Record> realmResults;
-    private OnRecordClickListener recordClickListener;
+    Context context;
 
 
-    public RecordAdapter(Context context, RealmResults<Record> results,OnRecordClickListener orcl){
+    public RecordAdapter(Context context, RealmResults<Record> results){
         inflater = LayoutInflater.from(context);
         this.realmResults = results;
-        this.recordClickListener = orcl;
+        this.context = context;
     }
 
     @Override
     public RecordHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.recordlistitem,parent,false);
-        RecordHolder recordholder = new RecordHolder(view,recordClickListener);
+        RecordHolder recordholder = new RecordHolder(view,context);
         return recordholder;
     }
 
@@ -48,7 +48,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordHold
     class RecordHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Record record;
         private TextView recordItem;
-        private OnRecordClickListener myRecordClickListener;
+        Context c;
+
 
         public void setRecord(Record r){
             this.record = r;
@@ -56,11 +57,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordHold
         }
 
 
-        public RecordHolder(View itemView, OnRecordClickListener orcl) {
+        public RecordHolder(View itemView, Context c) {
             super(itemView);
             itemView.setOnClickListener(this);
-            this.myRecordClickListener = orcl;
             recordItem = (TextView)itemView.findViewById(R.id.tv_recorditem);
+            this.c  = c;
 
         }
 
@@ -68,7 +69,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordHold
         @Override
         public void onClick(View view) {
             Log.d("tag","click "+ record.getDescription());
-            myRecordClickListener.onRecordClick(record);
+            ((HomeActivity) context).onRecordClick(record);
 
         }
     }

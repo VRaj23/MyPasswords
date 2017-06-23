@@ -24,23 +24,12 @@ import varadraj.model.Record;
  * Created by varad on 2/6/17.
  */
 
-public class HomeActivity extends AppCompatActivity implements OnRecordClickListener,OnDataChangeListener{
+public class HomeActivity extends AppCompatActivity{
 
     private RecyclerView recyclerView;
     private RecordAdapter adapter;
     private Realm realm;
-    private  OnDataChangeListener d;
-    public  static  final Parcelable.Creator<HomeActivity> CREATOR = new Parcelable.Creator<HomeActivity>(){
-        @Override
-        public HomeActivity createFromParcel(Parcel parcel) {
-            return null;
-        }
 
-        @Override
-        public HomeActivity[] newArray(int i) {
-            return new HomeActivity[0];
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +37,9 @@ public class HomeActivity extends AppCompatActivity implements OnRecordClickList
         setContentView(R.layout.activity_homeactivity);
         realm = Realm.getDefaultInstance();
         recyclerView = (RecyclerView)findViewById(R.id.rv_home);
-        adapter = new RecordAdapter(this,getAllRecords(),this);
+        adapter = new RecordAdapter(this,getAllRecords());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        d = this;
     }
 
     @Override
@@ -80,7 +68,6 @@ public class HomeActivity extends AppCompatActivity implements OnRecordClickList
                 FragmentManager fm = getFragmentManager();
                 AddRecordFragment addR = new AddRecordFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("parcel",d);
                 addR.setArguments(bundle);
                 addR.show(fm,"Add New Record");
                 break;
@@ -119,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements OnRecordClickList
     }
 
 
-    @Override
+
     public void onRecordClick(Record r) {
         android.app.FragmentManager fm = getFragmentManager();
         ViewPassword vp = new ViewPassword();
@@ -127,26 +114,16 @@ public class HomeActivity extends AppCompatActivity implements OnRecordClickList
         bundle.putString("description",r.getDescription());
         bundle.putString("username",r.getUsername());
         bundle.putString("password",r.getPassword());
-        bundle.putParcelable("deleteListener",d);
         vp.setArguments(bundle);
         vp.show(fm,r.getDescription());
     }
 
-    @Override
+
     public void onDataChanged() {
-        adapter = new RecordAdapter(this,getAllRecords(),this);
+        adapter = new RecordAdapter(this,getAllRecords());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.invalidate();
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

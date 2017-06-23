@@ -22,7 +22,6 @@ public class AddRecordFragment extends DialogFragment implements View.OnClickLis
 
     EditText username,password,description;
     Button saveRecord;
-    OnDataChangeListener onDataChangeListener;
     String editUsername = null, editPassword = null, editDescription = null;
     private boolean edit = false;
 
@@ -41,7 +40,6 @@ public class AddRecordFragment extends DialogFragment implements View.OnClickLis
         saveRecord = (Button)view.findViewById(R.id.bt_saverecord);
         saveRecord.setOnClickListener(this);
         Bundle bundle = getArguments();
-        onDataChangeListener = bundle.getParcelable("parcel");
         //for edit record
         editUsername = bundle.getString("editUsername");
         editPassword = bundle.getString("editPassword");
@@ -69,12 +67,12 @@ public class AddRecordFragment extends DialogFragment implements View.OnClickLis
                 }
                 else if(edit){
                     editRecordInDatabase();
-                    onDataChangeListener.onDataChanged();
+                    ((HomeActivity)getActivity()).onDataChanged();
                     getActivity().getFragmentManager().beginTransaction().remove(this).commit();
                 }
                 else{
                     saveRecordInDatabase();
-                    onDataChangeListener.onDataChanged();
+                    ((HomeActivity)getActivity()).onDataChanged();
                     getActivity().getFragmentManager().beginTransaction().remove(this).commit();
                 }
             }
