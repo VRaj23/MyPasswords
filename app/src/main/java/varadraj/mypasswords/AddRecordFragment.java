@@ -41,9 +41,9 @@ public class AddRecordFragment extends DialogFragment implements View.OnClickLis
         saveRecord.setOnClickListener(this);
         Bundle bundle = getArguments();
         //for edit record
-        editUsername = bundle.getString("editUsername");
-        editPassword = bundle.getString("editPassword");
-        editDescription = bundle.getString("editDescription");
+        editUsername = bundle.getString("username");
+        editPassword = bundle.getString("password");
+        editDescription = bundle.getString("description");
 
         if (editPassword != null){
             username.setText(editUsername);

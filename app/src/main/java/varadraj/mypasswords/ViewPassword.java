@@ -24,6 +24,7 @@ public class ViewPassword extends DialogFragment implements View.OnClickListener
     TextView viewUserName, viewPassword;
     Button edit,delete;
     private String username,password,description;
+    private Bundle bundle;
 
     @Nullable
     @Override
@@ -36,7 +37,7 @@ public class ViewPassword extends DialogFragment implements View.OnClickListener
         edit.setOnClickListener(this);
         delete = (Button)view.findViewById(R.id.bt_deleterecord);
         delete.setOnClickListener(this);
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
         username = bundle.getString("username");
         password = bundle.getString("password");
         description = bundle.getString("description");
@@ -54,10 +55,6 @@ public class ViewPassword extends DialogFragment implements View.OnClickListener
                 FragmentManager fm = getActivity().getFragmentManager();
                 fm.beginTransaction().remove(this).commit(); //remove ViewPassword fragment before starting edit fragment.
                 AddRecordFragment addFM = new AddRecordFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("editUsername",username);
-                bundle.putString("editPassword",password);
-                bundle.putString("editDescription",description);
                 addFM.setArguments(bundle);
                 addFM.show(fm,"Edit Record");
 
