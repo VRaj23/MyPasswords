@@ -120,10 +120,7 @@ public class HomeActivity extends AppCompatActivity{
 
 
     public void onDataChanged() {
-        adapter = new RecordAdapter(this,getAllRecords());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        recyclerView.invalidate();
+        adapter.notifyDataSetChanged();
     }
 
 }
